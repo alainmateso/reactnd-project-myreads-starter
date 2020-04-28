@@ -9,6 +9,7 @@ class BooksApp extends React.Component {
   state = {
     books: [],
     loading: true,
+    searchResults: []
   }
 
   componentDidMount() {
@@ -28,7 +29,7 @@ class BooksApp extends React.Component {
   updateShelf(book, shelf) {
     if (shelf !== 'none') {
       BooksAPI.update(book, shelf);
-      return this.setState((prevState) => ({
+      this.setState((prevState) => ({
         books: prevState.books.filter((item) =>
           item.id === book.id ? { ...item, shelf } : item
         )
@@ -36,8 +37,18 @@ class BooksApp extends React.Component {
     }
   }
 
+  searchBooks(query) {
+    BooksAPI.search(query)
+      .then((results) => {
+        this.setState(() => ({
+          searchResults: results,
+          loading: false
+        }))
+      })
+  }
+
   render() {
-    const { loading, books } = this.state;
+    const { loading, books, searchResults } = this.state;
     return (
       <div>
         <Route exact path='/' render={() => (
@@ -48,7 +59,11 @@ class BooksApp extends React.Component {
           />
         )} />
         <Route path='/search' render={() => (
-          <SearchBooks />
+          <SearchBooks
+            searchResults={searchResults}
+            updateShelf={this.updateShelf}
+            searchBooks={this.searchBooks}
+          />
         )} />
       </div>
     )

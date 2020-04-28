@@ -19,7 +19,11 @@ const Book = ({ books, shelf, onChange }) => {
                 />
               </div>
               <div className="book-title">{book.title}</div>
-              <div className="book-authors">{book.authors[0]}</div>
+              <div className="book-authors">
+                {book.authors.map((author) => (
+                  <span key={author}>{author}<br /></span>
+                ))}
+              </div>
             </div>
           </li>
         ))) : 'No books found in this category'}

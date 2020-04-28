@@ -52,7 +52,7 @@ class SearchBooks extends Component {
                   onChange={updateShelf}
                 />
               ))
-            ) : (<div>Type your search query</div>)}
+            ) : ''}
           </div>
         </div>
       </div>

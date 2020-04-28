@@ -2,7 +2,8 @@ import React from 'react'
 import './App.css'
 import { Link } from 'react-router-dom';
 import Book from './Book';
-import * as BooksAPI from './BooksAPI'
+import { bookShelves } from './bookShelves';
+
 
 
 class ListBooks extends React.Component {
@@ -13,53 +14,39 @@ class ListBooks extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: [],
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
-      })
   }
 
   render() {
+    const { updateShelf, loading, books } = this.props;
     return (
       <div className="app">
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <div className="list-books-content">
+          {loading ? 'Loading...' : (
             <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <Book
-                  books={this.state.books}
-                  shelf='currentlyReading'
-                />
+              <div className="list-books-content">
+                <div>
+                  <div className="bookshelf">
+                    {bookShelves.map(({ name, value }) => (
+                      <div key={value}>
+                        <h2 className="bookshelf-title">{name}</h2>
+                        <Book
+                          books={books}
+                          shelf={value}
+                          onChange={updateShelf}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <Book
-                  books={this.state.books}
-                  shelf='wantToRead'
-                />
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <Book
-                  books={this.state.books}
-                  shelf='read'
-                />
+              <div className="open-search">
+                <Link to='/search'><button>Add a book</button></Link>
               </div>
             </div>
-          </div>
-          <div className="open-search">
-            <Link to='/search'><button>Add a book</button></Link>
-          </div>
+          )}
         </div>
       </div>
     )

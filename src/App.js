@@ -26,22 +26,19 @@ class BooksApp extends React.Component {
       })
   }
 
-  updateFromSearch = (selectedBook, newShelf) => {
-    const { searchResults } = this.state;
-    const booksFromSearch = searchResults.filter((book) => book.shelf !== 'none')
-    this.updateShelf(selectedBook, newShelf)
-    booksFromSearch.length
-      ? this.setState((prevState) => ({
-        books: [...prevState.books, booksFromSearch]
-      }))
-      : this.setState((prevState) => ({
-        books: prevState.books
-      }))
-  }
+  matchFromSearch = (book, shelf) => {
+    const { books } = this.state;
+    const found = books.find(item => item.id === book.id);
+    if (!found)
+      return this.setState((prevState) => ({
+        books: prevState.books.concat({ ...book, shelf })
+      }));
+  };
 
   updateShelf = (selectedBook, newShelf) => {
     if (newShelf !== 'none') {
       BooksAPI.update(selectedBook, newShelf);
+      this.matchFromSearch(selectedBook, newShelf)
       return this.setState((prevState) => ({
         books: prevState.books.filter((item) =>
           item.id === selectedBook.id ? item.shelf = newShelf : item
@@ -50,14 +47,29 @@ class BooksApp extends React.Component {
     }
   }
 
-  searchBooks = (query) => {
-    BooksAPI.search(query)
-      .then((results) => {
-        this.setState(() => ({
-          searchResults: results,
-          loading: false
-        }))
+  updateFromSearch = (results) => {
+    const { books } = this.state;
+    return (
+      results.map((item) => {
+        const found = books.find(book => book.id === item.id);
+        return found ? found : item;
       })
+    );
+  };
+  
+  searchBooks = (query) => {
+    this.setState(() => ({
+      loading: true
+    }))
+    if (query !== '') {
+      BooksAPI.search(query)
+        .then((results) => {
+          this.setState(() => ({
+            searchResults: this.updateFromSearch(results),
+            loading: false
+          }))
+        })
+    }
   }
 
   render() {
@@ -73,8 +85,9 @@ class BooksApp extends React.Component {
         )} />
         <Route path='/search' render={() => (
           <SearchBooks
+            loading={loading}
             searchResults={searchResults}
-            updateShelf={this.updateFromSearch}
+            updateShelf={this.updateShelf}
             searchBooks={this.searchBooks}
           />
         )} />

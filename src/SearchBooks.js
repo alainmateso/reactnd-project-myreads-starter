@@ -15,7 +15,7 @@ class SearchBooks extends Component {
   }
 
   render() {
-    const { searchResults, updateShelf } = this.props;
+    const { searchResults, updateShelf, loading } = this.props;
     return (
       <div className="app">
         <div className="search-books">
@@ -44,12 +44,16 @@ class SearchBooks extends Component {
             </div>
           </div>
           <div className="search-books-results">
-            {this.state.query && searchResults.length !== 0 ? (
-              <Book
-                books={searchResults.map((result) => result)}
-                onChange={updateShelf}
-              />
-            ) : ''}
+            {loading ? 'Loading...' :
+              (
+                this.state.query!== '' && searchResults.length ? (
+                  <Book
+                    books={searchResults.map((result) => result)}
+                    onChange={updateShelf}
+                  />
+                ) : ''
+              )
+            }
           </div>
         </div>
       </div>

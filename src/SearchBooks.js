@@ -45,13 +45,10 @@ class SearchBooks extends Component {
           </div>
           <div className="search-books-results">
             {this.state.query && searchResults.length !== 0 ? (
-              searchResults.map((result) => (
-                <Book
-                  key={result.id}
-                  books={result}
-                  onChange={updateShelf}
-                />
-              ))
+              <Book
+                books={searchResults.map((result) => result)}
+                onChange={updateShelf}
+              />
             ) : ''}
           </div>
         </div>

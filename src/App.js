@@ -26,6 +26,19 @@ class BooksApp extends React.Component {
       })
   }
 
+  updateFromSearch = (selectedBook, newShelf) => {
+    const { searchResults } = this.state;
+    const booksFromSearch = searchResults.filter((book) => book.shelf !== 'none')
+    this.updateShelf(selectedBook, newShelf)
+    booksFromSearch.length
+      ? this.setState((prevState) => ({
+        books: [...prevState.books, booksFromSearch]
+      }))
+      : this.setState((prevState) => ({
+        books: prevState.books
+      }))
+  }
+
   updateShelf = (selectedBook, newShelf) => {
     if (newShelf !== 'none') {
       BooksAPI.update(selectedBook, newShelf);
@@ -61,7 +74,7 @@ class BooksApp extends React.Component {
         <Route path='/search' render={() => (
           <SearchBooks
             searchResults={searchResults}
-            updateShelf={this.updateShelf}
+            updateShelf={this.updateFromSearch}
             searchBooks={this.searchBooks}
           />
         )} />

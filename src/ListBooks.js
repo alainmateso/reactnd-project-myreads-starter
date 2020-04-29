@@ -20,8 +20,7 @@ const ListBooks = ({ updateShelf, loading, books }) => {
                     <div key={value}>
                       <h2 className="bookshelf-title">{name}</h2>
                       <Book
-                        books={books}
-                        shelf={value}
+                        books={books.filter((b) => b.shelf === value)}
                         onChange={updateShelf}
                       />
                     </div>

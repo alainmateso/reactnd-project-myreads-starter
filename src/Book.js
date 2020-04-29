@@ -2,13 +2,12 @@ import React from 'react'
 import './App.css'
 import ShelfChanger from './ShelfChanger';
 
-const Book = ({ books, shelf, onChange }) => {
-  const foundBooks = books.filter((b) => (b.shelf === shelf))
+const Book = ({ books, onChange }) => {
   return (
     
     <div className="bookshelf-books">
       <ol className="books-grid">
-        {foundBooks.length ? (foundBooks.map((book) => (
+        {books.length ? (books.map((book) => (
           <li key={book.id}>
             <div className="book">
               <div className="book-top">
@@ -26,13 +25,13 @@ const Book = ({ books, shelf, onChange }) => {
               </div>
               <div className="book-title">{book.title}</div>
               <div className="book-authors">
-                {book.authors.map((author) => (
+                {book.authors ? book.authors.map((author) => (
                   <span key={author}>{author}<br /></span>
-                ))}
+                )): 'No author'}
               </div>
             </div>
           </li>
-        ))) : 'No books found in this category'}
+        ))) : 'It appears this shelf is empty'}
       </ol>
     </div>
   )

@@ -49,8 +49,9 @@ class BooksApp extends React.Component {
 
   updateFromSearch = (results) => {
     const { books } = this.state;
+    const { error } = results;
     return (
-      results.map((item) => {
+      !error && results.map((item) => {
         const found = books.find(book => book.id === item.id);
         return found ? found : item;
       })

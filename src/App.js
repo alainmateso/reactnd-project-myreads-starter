@@ -26,18 +26,18 @@ class BooksApp extends React.Component {
       })
   }
 
-  updateShelf(book, shelf) {
-    if (shelf !== 'none') {
-      BooksAPI.update(book, shelf);
-      this.setState((prevState) => ({
+  updateShelf = (selectedBook, newShelf) => {
+    if (newShelf !== 'none') {
+      BooksAPI.update(selectedBook, newShelf);
+      return this.setState((prevState) => ({
         books: prevState.books.filter((item) =>
-          item.id === book.id ? { ...item, shelf } : item
+          item.id === selectedBook.id ? item.shelf = newShelf : item
         )
       }))
     }
   }
 
-  searchBooks(query) {
+  searchBooks = (query) => {
     BooksAPI.search(query)
       .then((results) => {
         this.setState(() => ({

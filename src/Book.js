@@ -12,7 +12,13 @@ const Book = ({ books, shelf, onChange }) => {
           <li key={book.id}>
             <div className="book">
               <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                <div
+                  className="book-cover"
+                  style={{
+                    width: 128,
+                    height: 193,
+                    backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+                  }}></div>
                 <ShelfChanger
                   selectedOption={book.shelf ? book.shelf : "none"}
                   onChange={(e) => onChange(book, e.target.value)}

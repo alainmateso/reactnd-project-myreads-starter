@@ -19,7 +19,7 @@ const Book = ({ books, onChange }) => {
                     height: 193,
                     backgroundImage: `url(${book.imageLinks
                       ? book.imageLinks.smallThumbnail
-                      : book.previewLink})`
+                      : './icons/thumb-not-available.png'})`
                   }}></div>
                 <ShelfChanger
                   selectedOption={book.shelf ? book.shelf : "none"}

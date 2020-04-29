@@ -19,10 +19,7 @@ class BooksApp extends React.Component {
   getAllBooks() {
     BooksAPI.getAll()
       .then((books) => {
-        this.setState(() => ({
-          books,
-          loading: false
-        }))
+        this.setState({ books, loading: false })
       })
   }
 
@@ -36,15 +33,13 @@ class BooksApp extends React.Component {
   };
 
   updateShelf = (selectedBook, newShelf) => {
-    if (newShelf !== 'none') {
-      BooksAPI.update(selectedBook, newShelf);
-      this.matchFromSearch(selectedBook, newShelf)
-      return this.setState((prevState) => ({
-        books: prevState.books.filter((item) =>
-          item.id === selectedBook.id ? item.shelf = newShelf : item
-        )
-      }))
-    }
+    BooksAPI.update(selectedBook, newShelf);
+    this.matchFromSearch(selectedBook, newShelf)
+    return this.setState((prevState) => ({
+      books: prevState.books.filter((item) =>
+        item.id === selectedBook.id ? item.shelf = newShelf : item
+      )
+    }))
   }
 
   updateFromSearch = (results) => {
@@ -57,12 +52,10 @@ class BooksApp extends React.Component {
       })
     );
   };
-  
+
   searchBooks = (query) => {
-    this.setState(() => ({
-      loading: true
-    }))
     if (query !== '') {
+      this.setState({ loading: true })
       BooksAPI.search(query)
         .then((results) => {
           this.setState(() => ({

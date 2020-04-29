@@ -11,6 +11,30 @@ To get started developing right away:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
+## Move a book from a shelf to another
+* Click the drop down arrow on any book
+* Select the category you want to move it to. Either `Currently Reading`, `Want to Read` or `Read`
+
+The book will be moved from shelf to shelf instantly
+
+## Remove a book from any shelf
+* Click the drop down arrow on any book
+* Select None 
+
+The book will be removed from the shelf
+
+## Search though books
+* Click the + button on the main page of the app
+* Type in the search box any search keyword
+
+The page will show `Loading...` as the app searches for matching results and it will be blank when nothing is typed in the search box or no results are found
+
+* Use the back arrow on the search page to go to the main page
+
+`
+You can place any book on your prefered shelf from the search page just by following the normal procedure of moving a book from a shelf to another as described above.
+`
+
 ## What You're Getting
 ```bash
 ├── CONTRIBUTING.md

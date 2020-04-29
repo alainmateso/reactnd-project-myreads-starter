@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import ShelfChanger from './ShelfChanger';
+import PropTypes from 'prop-types';
 
 const Book = ({ books, onChange }) => {
   return (
@@ -37,6 +38,11 @@ const Book = ({ books, onChange }) => {
       </ol>
     </div>
   )
+}
+
+Book.propTypes = {
+  books: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default Book;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { bookShelves } from './bookShelves';
+import PropTypes from 'prop-types';
 
 const ShelfChanger = ({ selectedOption, onChange }) => {
   return (
@@ -13,6 +14,11 @@ const ShelfChanger = ({ selectedOption, onChange }) => {
       </select>
     </div>
   )
+}
+
+ShelfChanger.propTypes = {
+  selectedOption: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default ShelfChanger;

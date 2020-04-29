@@ -3,6 +3,7 @@ import './App.css'
 import { Link } from 'react-router-dom';
 import Book from './Book';
 import { bookShelves } from './bookShelves';
+import PropTypes from 'prop-types';
 
 const ListBooks = ({ updateShelf, loading, books }) => {
   return (
@@ -36,6 +37,12 @@ const ListBooks = ({ updateShelf, loading, books }) => {
       </div>
     </div>
   )
+}
+
+ListBooks.propTypes = {
+  updateShelf: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  books: PropTypes.array.isRequired
 }
 
 export default ListBooks;
